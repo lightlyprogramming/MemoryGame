@@ -80,24 +80,40 @@ public class MemoryGame {
             int col2 = scan.nextInt() - 1;
             if(row2 == -1 || col2 == -1) playGame = false;
             displayTempBoard(hiddenBoard, gameBoard, row2, col2);
+
+            checkCell(hiddenBoard, gameBoard, row1, col1, row2, col2);
         }
 
         System.out.println("Thanks for playing!");
     }
 
+    // display board method, 
+    
     private static void displayBoard(int[][] board){
         for(int[] row : board){
             for(int cell : row){
-                System.out.print(cell + " "); // implement if statement
+                if(cell == 0){
+                    System.out.print("* ");
+                } else { 
+                    System.out.print(cell + " "); // implement if statement
+                }
             }
             System.out.println();
         }
     }
 
-    
-
     private static void displayTempBoard(int[][]hiddenBoard, int[][]gameBoard, int r1, int c1){
         hiddenBoard[r1][c1] = gameBoard[r1][c1];
         displayBoard(hiddenBoard);
+    }
+
+    private static void checkCell(int[][]hiddenBoard, int[][] gameBoard, int r1, int c1, int r2, int c2){
+        if(gameBoard[r1][c1] == gameBoard[r2][c2]){
+            System.out.println("You found a match!");
+        } else {
+            hiddenBoard[r1][c1] = 0;
+            hiddenBoard[r2][c2] = 0;
+        }
+        
     }
 }
