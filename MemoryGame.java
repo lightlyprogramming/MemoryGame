@@ -8,7 +8,10 @@ public class MemoryGame {
         int diff = 0; // choice of difficulty
         int size = 2*diff; // creates grid of min 4, max 20
 
-        boolean playGame = true;
+        int time = 0; // time it took for guesses
+        int guesses = 0; // amount of guesses
+
+        boolean playGame = true; // loop control variable
 
         while (!(diff >= 1 && diff <= 5)){ // ensures valid int when int is inputted
             System.out.println("Input your difficulty (1-5): ");
@@ -67,37 +70,64 @@ public class MemoryGame {
         System.out.print(String.format("\033[2J")); // Attributed to StackOverflow, user LabOctoCat
 
 
-        while(playGame){
+        while(playGame = true){
             displayBoard(hiddenBoard);
             System.out.println("Enter the coordinates of the first cell with the row (1-" + size + ") first and column (1-" + size + ") second. Enter -1 to quit. The board is " + size + " by " + size + ".");
             int row1 = scan.nextInt() - 1;
             int col1 = scan.nextInt() - 1;
-            if(row1 == -1 || col1 == -1) playGame = false;
+            if(row1 == -2 || col1 == -2){
+                playGame = false;
+                break;
+            }
             displayTempBoard(hiddenBoard, gameBoard, row1, col1);
 
             System.out.println("Enter the coordinates of the second cell with the row (1-" + size + ") first and column (1-" + size + ") second. Enter -1 to quit. The board is " + size + " by " + size + ".");
             int row2 = scan.nextInt() - 1;
             int col2 = scan.nextInt() - 1;
-            if(row2 == -1 || col2 == -1) playGame = false;
+            if(row2 == -2 || col2 == -2){
+                playGame = false;
+                break;
+            }
             displayTempBoard(hiddenBoard, gameBoard, row2, col2);
+
+            checkCell(hiddenBoard, gameBoard, row1, col1, row2, col2);
+
+            try { Thread.sleep(1000);} catch (Exception e){}
+            System.out.print(String.format("\033[2J")); // Attributed to StackOverflow, user LabOctoCat
         }
 
         System.out.println("Thanks for playing!");
+        System.out.println("You took " + guesses + "!");
+        System.out.println("This took you " + time + " seconds");
     }
 
+    // display board method, 
+    
     private static void displayBoard(int[][] board){
         for(int[] row : board){
             for(int cell : row){
-                System.out.print(cell + " "); // implement if statement
+                if(cell == 0){
+                    System.out.print("* ");
+                } else { 
+                    System.out.print(cell + " "); // implement if statement
+                }
             }
             System.out.println();
         }
     }
 
-    
-
     private static void displayTempBoard(int[][]hiddenBoard, int[][]gameBoard, int r1, int c1){
         hiddenBoard[r1][c1] = gameBoard[r1][c1];
         displayBoard(hiddenBoard);
+    }
+
+    private static void checkCell(int[][]hiddenBoard, int[][] gameBoard, int r1, int c1, int r2, int c2){
+        if(gameBoard[r1][c1] == gameBoard[r2][c2]){
+            System.out.println("You found a match!");
+        } else {
+            hiddenBoard[r1][c1] = 0;
+            hiddenBoard[r2][c2] = 0;
+        }
+        
     }
 }
