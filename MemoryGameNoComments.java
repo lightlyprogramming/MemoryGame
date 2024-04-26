@@ -45,10 +45,9 @@ public class MemoryGame {
             }
         }
 
-        // gameplay loop
         while(playGame == true){ 
             displayBoard(hiddenBoard); 
-            System.out.println("Enter the coordinates of the first cell with the row (1-" + size + ") first and column (1-" + size + ") second. Enter -1 to quit. The board is " + size + " by " + size + "."); // asks for first guess from the user
+            System.out.println("Enter the coordinates of the first cell with the row (1-" + size + ") first and column (1-" + size + ") second. Enter -1 to quit. The board is " + size + " by " + size + "."); 
             int row1 = scan.nextInt() - 1;
             if(row1 == -2){
                 playGame = false;
@@ -62,7 +61,7 @@ public class MemoryGame {
             
             displayTempBoard(hiddenBoard, gameBoard, row1, col1);
 
-            System.out.println("Enter the coordinates of the second cell with the row (1-" + size + ") first and column (1-" + size + ") second. Enter -1 to quit. The board is " + size + " by " + size + "."); // asks for second guess from the user
+            System.out.println("Enter the coordinates of the second cell with the row (1-" + size + ") first and column (1-" + size + ") second. Enter -1 to quit. The board is " + size + " by " + size + "."); 
             int row2 = scan.nextInt() - 1;
             if(row2 == -2){
                 playGame = false;
